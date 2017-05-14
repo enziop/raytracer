@@ -28,4 +28,10 @@
 *.app
 *.bak
 
-
+# Visual Studio
+*.sln
+*.vcxproj*
+packages.config
+.vs/
+packages/
+Debug/

@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string.h>
-#include <math.h>
+#include <cmath>
 #include <sstream>
 #include "Vec2.h"
 #include "Vec3.h"
@@ -9,7 +9,8 @@
 #include "Camera.h"
 #include "Intersector.h"
 #include "ppmio.h"
-#include <unistd.h>
+//#include <unistd.h>
+#include <windows.h>
 
 #include <boost/multi_array.hpp>
 

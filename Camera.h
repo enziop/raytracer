@@ -1,7 +1,7 @@
 #ifndef __Camera_H_INCLUDED__
 #define __Camera_H_INCLUDED__
-#define _USE_MATH_DEFINES
-#include <math.h>
+#define M_PI 3.14159265359
+#include <cmath>
 #include "Vec3.h"
 #include "Matrix4x4.h"
 #include "TrackingPlane.h"

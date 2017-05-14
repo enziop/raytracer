@@ -28,7 +28,8 @@ Matrix4x4 Matrix4x4::operator * (const Matrix4x4 &other) const {
 //matrix times vector
 Vec3 Matrix4x4::operator * (const Vec3 &other) const {
     Vec3 out;
-    double t, out_t = 1;
+	double t = 1;
+	double out_t = 1;
     
     out.x = matrix[0][0] * other.x + matrix[1][0] * other.y + matrix[2][0] * other.z + matrix[3][0] * t; 
     out.y = matrix[0][1] * other.x + matrix[1][1] * other.y + matrix[2][1] * other.z + matrix[3][1] * t;

@@ -1,5 +1,5 @@
 #include "Vec2.h"
-#include <math.h>
+#include <cmath>
 //Constructors
 Vec2::Vec2() : x(0.0), y(0.0){}
 Vec2::Vec2(double _x, double _y) : x(_x), y(_y){}

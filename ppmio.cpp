@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void PpmIO::test(int w, int h) {
+void PpmIO::test(unsigned w, unsigned h) {
         ofstream f;
         f.open("out.ppm");
         f << "P3\n" << w << " " << h << "\n255\n";

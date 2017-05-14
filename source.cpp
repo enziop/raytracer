@@ -1,6 +1,5 @@
 #include "source.h"
 
-
 struct Ray {
     Vec3 origin;
     Vec3 direction;
@@ -52,6 +51,11 @@ std::string mat4str(Matrix4x4 mat, std::string name="") {
 
 char greys[11] = " .:-=+*#%@";
 
+void clear() {
+	// CSI[2J clears screen, CSI[H moves the cursor to top-left corner
+	std::system("cls");
+}
+
 int main() {
     
     //PpmIO imgout;
@@ -64,6 +68,7 @@ int main() {
     Vec3 cornerTL (-viewPlane.x / 2,-viewPlane.y / 2, 1);
     Vec3 cornerBR ( viewPlane.x / 2, viewPlane.y / 2, 1);
     
+	//vertices for groundplane
     Vec3 P1 ( 2, 0, 0);
     Vec3 P2 (-2, 0, 0);
     Vec3 P3 ( 0, 2, 0);
@@ -75,7 +80,7 @@ int main() {
     TriMesh testMesh (4, tmpVerts, 2, tmpFaces);
     delete[] tmpVerts, tmpFaces;
     std::cout << "first mesh created\n";
-    //create 2nd mesh
+    //create 2nd mesh (Cube)
     tmpVerts = new Vec3[8] {Vec3(-0.5,-0.5, 0.0), Vec3(-0.5, 0.5, 0.0), Vec3( 0.5, 0.5, 0.0), Vec3( 0.5,-0.5, 0.0), 
                         Vec3(-0.5,-0.5, 1.0), Vec3(-0.5, 0.5, 1.0), Vec3( 0.5, 0.5, 1.0), Vec3( 0.5,-0.5, 1.0)};
     tmpFaces = new face[12] {{0, 1, 2}, {2, 3, 0},
@@ -114,7 +119,7 @@ int main() {
     */
     
     std::cout << "starting loop\n";
-    usleep(2000000);
+    Sleep(2000);
     for (int i = 0; i < 300; ++i) {
         
         for (PxIndex y = 0; y < resolution_v; ++y) {
@@ -127,6 +132,7 @@ int main() {
                 scanPointRight = cam.viewPlane.cornerTR.lerp(cam.viewPlane.cornerBR, double(y)/cam.resolution_v);
                 Vec3 planeSample;
                 planeSample = scanPointLeft.lerp(scanPointRight, double(x)/cam.resolution_h);
+				/* Debug corner positions
                 if (x + y == 0) {
                     std::cout << vec3str(planeSample, "lerpedTL");
                 }
@@ -134,6 +140,7 @@ int main() {
                     std::cout << vec3str(planeSample, "lerpedBR") << "\n";
                     //std::cout << vec3str(scanPointLeft, "scptL") << vec3str(scanPointRight, "scptR") << "w_h
                 }
+				*/
                 Ray tmpray;
                 tmpray.origin = cam.transform.getLocation();
                 tmpray.direction = planeSample - tmpray.origin;
@@ -188,17 +195,19 @@ int main() {
         }
         
         //boost::this_thread::sleep(boost::posix_time::milliseconds(60));
-        usleep(100000);
-        std::cout << "\033[2J\033[1;1H";
+        Sleep(50);
+        //std::cout << "\033[2J\033[1;1H";
+		clear();
         std::cout << "camRes_H: " << cam.resolution_h << " camRes_V: " << cam.resolution_v << "\n";
-        std::cout << vec3str(cam.transform.getLocation(), "camLoc") << vec3str(cam.target, "camTgt") << vec3str(cam.direction, "camDir") << "\n";
-        std::cout << vec3str(cam.viewPlane.location, "VPLoc") << vec3str(cam.viewPlane.target, "VPTgt") << vec3str(cam.viewPlane.upVector, "VPUp") << "\n";
-        std::cout << "viewplaneW: " << cam.viewPlane.width << " viewPlaneH: " << cam.viewPlane.height << "\n";
-        std::cout << vec3str(cam.viewPlane.cornerTL, "cTL") << vec3str(cam.viewPlane.cornerTR, "cTR") << vec3str(cam.viewPlane.cornerBL, "cBL") << vec3str(cam.viewPlane.cornerBR, "cBR") << "\n";
-        std::cout << vec3str(P3, "P3") << "\n";
-        BBox tmpBB = *(cubeMesh.getBBox());
-        std::cout << "x: " << tmpBB.xmin << " " << tmpBB.xmax << " y: " << tmpBB.ymin << " " << tmpBB.ymax << " z: " << tmpBB.zmin << " " << tmpBB.zmax << "\n";
-        std::cout << mat4str(camParent, "camParent");
+		//Debug info
+        //std::cout << vec3str(cam.transform.getLocation(), "camLoc") << vec3str(cam.target, "camTgt") << vec3str(cam.direction, "camDir") << "\n";
+        //std::cout << vec3str(cam.viewPlane.location, "VPLoc") << vec3str(cam.viewPlane.target, "VPTgt") << vec3str(cam.viewPlane.upVector, "VPUp") << "\n";
+        //std::cout << "viewplaneW: " << cam.viewPlane.width << " viewPlaneH: " << cam.viewPlane.height << "\n";
+        //std::cout << vec3str(cam.viewPlane.cornerTL, "cTL") << vec3str(cam.viewPlane.cornerTR, "cTR") << vec3str(cam.viewPlane.cornerBL, "cBL") << vec3str(cam.viewPlane.cornerBR, "cBR") << "\n";
+        //std::cout << vec3str(P3, "P3") << "\n";
+        //BBox tmpBB = *(cubeMesh.getBBox());
+        //std::cout << "x: " << tmpBB.xmin << " " << tmpBB.xmax << " y: " << tmpBB.ymin << " " << tmpBB.ymax << " z: " << tmpBB.zmin << " " << tmpBB.zmax << "\n";
+        //std::cout << mat4str(camParent, "camParent");
         //std::cout << mat4str(rotatorTM, "rotatorTM");
         std::cout << mat4str(cam.transform, "CamTM");
         std::cout << renderview.str();

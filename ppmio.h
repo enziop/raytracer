@@ -3,5 +3,5 @@
 
 class PpmIO {
 public:
-    void test(int w, int h);
+    void test(unsigned w, unsigned h);
 };

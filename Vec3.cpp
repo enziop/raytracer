@@ -1,5 +1,5 @@
 #include "Vec3.h"
-#include <math.h>
+#include <cmath>
 
 //Constructors
 Vec3::Vec3() : x(0.0), y(0.0), z(0.0){}
